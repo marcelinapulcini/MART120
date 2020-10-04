@@ -1,0 +1,13 @@
+p {font-size: larger; color: black;
+    margin: 100px; letter-spacing: 5px;=
+}
+
+.violettext {color: darkviolet ; font-weight: 700;
+}
+
+.boldtext {font-weight: 900; color: sienna;
+}
+
+#myid {font-size: 45px; color: teal; 
+    font-style: italic;
+}
