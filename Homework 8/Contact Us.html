@@ -1,0 +1,80 @@
+<html>
+<title>Contact Us
+</title>
+<head>
+        <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./styles/bootstrap-4.5.2-dist/css/bootstrap.min.css">
+<script src="./styles/bootstrap-4.5.2-dist/js/jquery-3.5.1.min.js"></script>
+<script src="./styles/bootstrap-4.5.2-dist/js/bootstrap.min.js"></script>
+<style>
+  body{
+    background-color: blanchedalmond;
+  }
+</style>
+<script>
+  function checkform()
+  {
+    var name;
+    name = document.getElementById("txtname").value;
+    if (name == "")
+    {
+      document.getElementById ("txtname").style.backgroundColor = "red"
+      document.getElementById ("txtname").focus()
+    }
+    else 
+    {
+      document.getElementById ("txtname").style.backgroundColor = "white"
+    }
+    var Email;
+    email = document.getElementById("txtemail").value;
+    if (email == "")
+    {
+      document.getElementById ("txtemail").style.backgroundColor = "red"
+      document.getElementById ("txtemail").focus()
+    }
+    else 
+    {
+      document.getElementById ("txtemail").style.backgroundColor = "white"
+    }
+    var AcceptTerms;
+    AcceptTerms = document.getElementById("checkbox").checked;
+    if (accepterms !== true)
+    {
+      document.getElementById ("accepttermsmessage").style.color = "red"
+      document.getElementById ("accepttermsmessage").innerHTML = "* Required"
+    }
+    else 
+    {
+      document.getElementById ("checkbox").style.color = "white"
+    }
+  }
+</script>
+  </head>
+
+<body>   
+  <table>
+    <tr>
+      <td>Name</td>
+      <td><input type="text" id="txtname"></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><input type="text" id="txtemail"></td>
+    </tr>
+    <tr>
+      <td>AcceptTerms</td>
+      <td><input type="checkbox" id="checkbox" ><span id="accepttermsmessage"></span></td>
+    </tr>
+  </table>
+    <form action="nextPage.html" type="Post">
+        <br>
+        <h4>Accept Terms?</h4>
+        <input type="radio" name="yes" value="yes">Yes</input>
+        <input type="radio" name="no" value="no">No</input>
+        <span id="accepttermsmessage"></span>
+        <br>
+       <button type="button" class="btn btn-primary" onClick="checkform();">Submit</button>
+    </form>
+</body>
+</html>
