@@ -1,8 +1,7 @@
-// x and y for my character
-var characterX = 100;
-var characterY = 100;
-// define the key codes for each letter
-var w = 87;
+var characterX = 50;
+var characterY = 50;
+
+var w = 87; 
 var s = 83;
 var a = 65;
 var d = 68;
@@ -21,9 +20,9 @@ var shapeYSpeeds = [];
 // create a shape when the mouse is clicked
 var mouseShapeX;
 var mouseShapeY;
-
-function setup() {
-    createCanvas(500, 600);
+function setup()
+{
+    createCanvas(600, 600);
     // get a random speed when the it first starts
     for (var i = 0; i < 50; i++) {
         shapeXSpeeds[i] = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
@@ -34,104 +33,135 @@ function setup() {
     }
 }
 
-function draw() {
-    background(120, 45, 78);
+function draw()
+{
+    background(200,165,100);
     stroke(0);
     fill(0);
+    
+    //drawboarders
+    drawboarders()
 
-    // call createBorders function
-    createBorders(10);
+    //exitmessage
+    exitmessage();
 
-    // exit message
-    textSize(16);
-    text("EXIT", width - 50, height - 50)
+    //create player
+    createplayer();
+    moveplayer();
 
-    //createCharacter(200,350);
-    drawCharacter();
-    characterMovement();
+    //createthreat
+    createthreat();
 
+    //drawcircle
+    drawcircle();
 
-    // potential enemy
+    //youwin
+    youwin();
+    
+} // need to close the draw function
+
+function mouseClicked()
+{
+    mouseShapeX = mouseX;
+    mouseShapeY = mouseY;
+}
+
+function createplayer()
+{
+    fill(100,100,200);
+    square(characterX,characterY, 55);
+}
+
+function moveplayer()
+{
+    // handle the keys
+    if(keyIsDown(w))
+    {
+        characterY -= 5;   
+    }
+    if(keyIsDown(s))
+    {
+        characterY += 5;   
+    }
+    if(keyIsDown(a))
+    {
+        characterX -= 5;   
+    }
+    if(keyIsDown(d))
+    {
+        characterX += 5;   
+    }
+}
+
+function createthreat()
+{
+// potential enemy
     fill(13, 145, 14);
     // draw the shape
     for (var i = 0; i < shapeXs.length; i++) {
         circle(shapeXs[i], shapeYs[i], diameters[i]);
         shapeXSpeeds[i] = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
         shapeYSpeeds[i] = Math.floor(Math.random() * (Math.floor(Math.random() * 5)) + 1);
+// move the shape
+shapeXs[i] += shapeXSpeeds[i];
+shapeYs[i] += shapeYSpeeds[i];
+// check to see if the shape has gone out of bounds
+if (shapeXs[i] > width) {
+    shapeXs[i] = 0;
+}
+if (shapeXs[i] < 0) {
+    shapeXs[i] = width;
+}
+if (shapeYs[i] > height) {
+    shapeYs[i] = 0;
+}
+if (shapeYs[i] < 0) {
+    shapeYs[i] = height;
+}
+}
+} // close the createthreat function
+function drawcircle()
+{
+    // create the shape based on the mouse click
+    fill(200,50,150);
+    circle(mouseShapeX, mouseShapeY, 30);
+}
 
-        // move the shape
-        shapeXs[i] += shapeXSpeeds[i];
-        shapeYs[i] += shapeYSpeeds[i];
-        // check to see if the shape has gone out of bounds
-        if (shapeXs[i] > width) {
-            shapeXs[i] = 0;
-        }
-        if (shapeXs[i] < 0) {
-            shapeXs[i] = width;
-        }
-        if (shapeYs[i] > height) {
-            shapeYs[i] = 0;
-        }
-        if (shapeYs[i] < 0) {
-            shapeYs[i] = height;
-        }
-    }
+function drawboarders()
+{
+    // top border
+    rect(0,0,width,20);
+    // left border
+    rect(0,0,20,height);
+    // bottom border
+    rect(0, height,width, -20);
+    // right upper border
+    rect(width,0,-20,height-50);
+}
+
+
+function exitmessage()
+{
+        // exit message
+        textSize(20);
+        text("EXIT THIS WAY", width-175,height-75)
+}
+//} had an extra { for exitmessage
+
+function youwin()
+{
     // check to see if the character has left the exit
-    if (characterX > width && characterY > width - 50) {
+    if(characterX > width-100 && characterY > width-100)
+    {
         fill(0);
         stroke(5);
-        textSize(26);
-        text("You Win!", width / 2 - 50, height / 2 - 50);
-    }
-
-    // create the shape based on the mouse click
-    fill(120, 130, 140);
-    circle(mouseShapeX, mouseShapeY, 25);
-}
-
-function characterMovement() {
-    // handle the keys
-    if (keyIsDown(w)) {
-        characterY -= 10;
-    }
-    if (keyIsDown(s)) {
-        characterY += 10;
-    }
-    if (keyIsDown(a)) {
-        characterX -= 10;
-        console.log("movement: " + characterX);
-    }
-    if (keyIsDown(d)) {
-        characterX += 10;
+        textSize(30);
+        text("You Win!", width/2-50, height/2-50);
     }
 }
 
-function createCharacter(x, y) {
-    characterX = x;
-    characterY = y;
-}
-
-function drawCharacter() {
-    fill(23, 40, 123);
-    circle(characterX, characterY, 25);
-}
-
-function createBorders(thickness) {
-    // top border
-    rect(0, 0, width, thickness);
-    // left border
-    rect(0, 0, thickness, height);
-    // bottom border
-    rect(0, height - thickness, width, thickness);
-    // right upper border
-    rect(width - thickness, 0, thickness, height - 50);
-}
-
-function mouseClicked() {
-    mouseShapeX = mouseX;
-    mouseShapeY = mouseY;
-}
-
-function getRandomNumber(number) {
-    return Math.floor(Math.random() * number) + 10;
+// needed to create the getRandomNumber function
+function getRandomNumber(number)
+{
+    return Math.floor(Math.random() * number) + 1;
 }
